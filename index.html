@@ -26,6 +26,9 @@ body {
   background: #008080;
   min-height: 100vh;
   padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .window {
@@ -33,8 +36,9 @@ body {
   border: 2px solid;
   border-color: var(--win-light) var(--win-darker) var(--win-darker) var(--win-light);
   box-shadow: 1px 1px 0 var(--win-darker);
-  min-width: 400px;
-  max-width: 95vw;
+  width: calc(100% - 4px);
+  height: calc(100vh - 4px);
+  max-width: 100%;
 }
 
 .title-bar {
@@ -172,16 +176,16 @@ body {
 
 #editor {
   width: 100%;
-  height: calc(100vh - 180px);
-  min-height: 300px;
+  height: calc(100% - 40px);
+  min-height: 200px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 12px;
+  font-size: 14px;
   resize: none;
   border: 2px solid;
   border-color: var(--win-darker) var(--win-light) var(--win-light) var(--win-darker);
-  padding: 2px;
+  padding: 4px;
   outline: none;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 .status-bar {
@@ -309,6 +313,28 @@ label {
 
 .about-content p {
   margin: 4px 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  body {
+    padding: 2px;
+  }
+  .title-bar-controls {
+    display: none;
+  }
+  .menu-item {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  .toolbar-btn {
+    width: 28px;
+    height: 26px;
+    font-size: 16px;
+  }
+  #editor {
+    font-size: 16px;
+  }
 }
 </style>
 </head>
@@ -875,14 +901,15 @@ function goToLine() {
 
 function resizeEditor() {
   const win = document.querySelector('.window');
-  const availableHeight = window.innerHeight - win.offsetTop - 4;
   const titleBar = document.querySelector('.title-bar').offsetHeight;
   const menuBar = document.querySelector('.menu-bar').offsetHeight;
   const toolbarHeight = showToolbar ? document.querySelector('.toolbar').offsetHeight : 0;
   const statusHeight = showStatusBar ? document.querySelector('.status-bar').offsetHeight : 0;
-  const padding = 10;
+  const editorContainer = document.querySelector('.editor-container');
+  const containerPadding = 6;
   
-  editor.style.height = (availableHeight - titleBar - menuBar - toolbarHeight - statusHeight - padding) + 'px';
+  const availableHeight = win.clientHeight - titleBar - menuBar - toolbarHeight - statusHeight - containerPadding;
+  editor.style.height = Math.max(availableHeight, 100) + 'px';
 }
 
 // Keyboard shortcuts
