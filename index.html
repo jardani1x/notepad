@@ -781,6 +781,10 @@ function newFile() {
   switchTab(newId);
 }
 
+function newTab() {
+  newFile();
+}
+
 function openFile() {
   const input = document.createElement('input');
   input.type = 'file';
