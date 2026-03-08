@@ -1141,6 +1141,17 @@ document.addEventListener('keydown', (e) => {
 // Window resize
 window.addEventListener('resize', resizeEditor);
 
+// Load from localStorage
+const savedContent = localStorage.getItem('notepad-content');
+if (savedContent !== null) {
+  editor.value = savedContent;
+}
+
+// Save to localStorage on input
+editor.addEventListener('input', function() {
+  localStorage.setItem('notepad-content', editor.value);
+});
+
 // Initialize
 updateTabUI();
 updateTitle();
